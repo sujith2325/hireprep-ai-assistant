@@ -210,4 +210,4 @@ For business inquiries or partnerships, please reach out to the maintainers thro
 
 ---
 
-**Made with ❤️ by the Natively team**
+**Made with ❤️ by the Sujith **
