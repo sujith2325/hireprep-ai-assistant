@@ -1,0 +1,109 @@
+use super::core_audio;
+use super::sck;
+use anyhow::Result;
+use ringbuf::HeapCons;
+
+pub use super::sck::list_output_devices;
+
+pub struct SpeakerInput {
+    backend: BackendInput,
+}
+
+enum BackendInput {
+    CoreAudio(core_audio::SpeakerInput),
+    Sck(sck::SpeakerInput),
+}
+
+impl SpeakerInput {
+    pub fn new(device_id: Option<String>) -> Result<Self> {
+        let force_sck = device_id.as_deref() == Some("sck");
+
+        if !force_sck {
+            // Try CoreAudio Tap first (Default)
+            println!("[SpeakerInput] Initializing CoreAudio Tap backend...");
+            match core_audio::SpeakerInput::new(device_id.clone()) {
+                Ok(input) => {
+                    println!("[SpeakerInput] CoreAudio Tap backend initialized.");
+                    return Ok(Self {
+                        backend: BackendInput::CoreAudio(input),
+                    });
+                }
+                Err(e) => {
+                    println!("[SpeakerInput] CoreAudio Tap initialization failed: {}. Falling back to ScreenCaptureKit.", e);
+                }
+            }
+        } else {
+            println!("[SpeakerInput] SCK backend explicitly requested.");
+        }
+
+        // Fallback to ScreenCaptureKit
+        let input = sck::SpeakerInput::new(device_id)?;
+        Ok(Self {
+            backend: BackendInput::Sck(input),
+        })
+    }
+
+    pub fn stream(self) -> Result<SpeakerStream> {
+        match self.backend {
+            BackendInput::CoreAudio(input) => {
+                let stream = input.stream()?;
+                Ok(SpeakerStream {
+                    backend: BackendStream::CoreAudio(stream),
+                })
+            }
+            BackendInput::Sck(input) => {
+                let stream = input.stream()?;
+                Ok(SpeakerStream {
+                    backend: BackendStream::Sck(stream),
+                })
+            }
+        }
+    }
+}
+
+pub struct SpeakerStream {
+    backend: BackendStream,
+}
+
+enum BackendStream {
+    CoreAudio(core_audio::SpeakerStream),
+    Sck(sck::SpeakerStream),
+}
+
+impl SpeakerStream {
+    pub fn sample_rate(&self) -> u32 {
+        match &self.backend {
+            BackendStream::CoreAudio(s) => s.sample_rate(),
+            BackendStream::Sck(s) => s.sample_rate(),
+        }
+    }
+
+    pub fn take_consumer(&mut self) -> Option<HeapCons<f32>> {
+        match &mut self.backend {
+            BackendStream::CoreAudio(s) => s.take_consumer(),
+            BackendStream::Sck(s) => s.take_consumer(),
+        }
+    }
+
+    /// Pause the underlying audio stream without destroying it.
+    pub fn pause(&mut self) {
+        match &mut self.backend {
+            BackendStream::CoreAudio(s) => s.pause(),
+            BackendStream::Sck(_s) => {
+                println!("[SpeakerStream] SCK pause: no-op (managed by capture thread)");
+            }
+        }
+    }
+
+    /// Resume the underlying audio stream.
+    /// Returns Err for CoreAudio (needs full recreation); SCK is a no-op.
+    pub fn resume(&mut self) -> Result<()> {
+        match &mut self.backend {
+            BackendStream::CoreAudio(s) => s.resume(),
+            BackendStream::Sck(_s) => {
+                println!("[SpeakerStream] SCK resume: no-op (stream remains active)");
+                Ok(())
+            }
+        }
+    }
+}

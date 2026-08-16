@@ -1,0 +1,87 @@
+import { LLMHelper } from "../LLMHelper";
+import { UNIVERSAL_RECAP_PROMPT } from "./prompts";
+import { TINY_RECAP_PROMPT } from "./tinyPrompts";
+import { resolveV2SystemPrompt, v2TierForPromptTier } from "./promptSystemV2";
+
+export class RecapLLM {
+    private llmHelper: LLMHelper;
+
+    constructor(llmHelper: LLMHelper) {
+        this.llmHelper = llmHelper;
+    }
+
+    /**
+     * Generate a neutral conversation summary
+     */
+    async generate(context: string): Promise<string> {
+        if (!context.trim()) return "";
+        try {
+            const promptOverride = resolveV2SystemPrompt({ action: 'recap', tier: v2TierForPromptTier(this.llmHelper.getPromptTier()) })
+                ?? (this.llmHelper.getPromptTier() === 'tiny' ? TINY_RECAP_PROMPT : UNIVERSAL_RECAP_PROMPT);
+            const fittedContext = this.llmHelper.fitContextForCurrentModel(context);
+            // ignoreKnowledgeMode=true — see ClarifyLLM.generate() for the full
+            // rationale: `context` is a conversation-context blob, not a real
+            // question, and letting it through the knowledge-mode intent classifier
+            // risks misclassifying the whole recap call as an intro request.
+            const stream = this.llmHelper.streamChat(fittedContext, undefined, undefined, promptOverride, true);
+            let fullResponse = "";
+            for await (const chunk of stream) fullResponse += chunk;
+            return this.clampRecapResponse(fullResponse);
+        } catch (error) {
+            console.error("[RecapLLM] Generation failed:", error);
+            return "";
+        }
+    }
+
+    /**
+     * Generate a neutral conversation summary (Streamed)
+     */
+    async *generateStream(context: string, options?: { contractRule?: string }): AsyncGenerator<string> {
+        if (!context.trim()) return;
+        try {
+            let promptOverride = resolveV2SystemPrompt({ action: 'recap', tier: v2TierForPromptTier(this.llmHelper.getPromptTier()) })
+                ?? (this.llmHelper.getPromptTier() === 'tiny' ? TINY_RECAP_PROMPT : UNIVERSAL_RECAP_PROMPT);
+            // CONTEXT OS (Phase 11): the caller may pass a source-contract rule
+            // (built from the active mode's TurnContextContract) so the recap is
+            // no longer mode-blind — e.g. "summarize the transcript only; do not
+            // introduce profile or document facts". Additive: absent → legacy.
+            if (options?.contractRule) {
+                promptOverride = `${promptOverride}\n\n${options.contractRule}`;
+            }
+            const fittedContext = this.llmHelper.fitContextForCurrentModel(context);
+            // See generate() above — ignoreKnowledgeMode=true.
+            yield* this.llmHelper.streamChat(fittedContext, undefined, undefined, promptOverride, true);
+        } catch (error) {
+            console.error("[RecapLLM] Streaming generation failed:", error);
+        }
+    }
+
+    private clampRecapResponse(text: string): string {
+        if (!text) return "";
+        const lines = text.split('\n');
+        const isBulletStart = (s: string) => /^\s*([-*•]|\d+\.)\s+/.test(s);
+        const groups: string[][] = [];
+        let cur: string[] | null = null;
+        let anyBullet = false;
+        for (const raw of lines) {
+            const line = raw.trim();
+            if (!line) continue;
+            if (isBulletStart(raw)) {
+                anyBullet = true;
+                cur = [line];
+                groups.push(cur);
+            } else if (cur) {
+                cur.push(line);
+            } else {
+                // Pre-bullet leading lines: treat as standalone groups (used in fallback path).
+                groups.push([line]);
+            }
+        }
+        if (!anyBullet) {
+            // Fallback: original behavior — first 5 non-empty lines.
+            return lines.map(l => l.trim()).filter(Boolean).slice(0, 5).join('\n');
+        }
+        const bullets = groups.filter(g => isBulletStart(g[0])).slice(0, 5);
+        return bullets.map(g => g.join(' ')).join('\n');
+    }
+}

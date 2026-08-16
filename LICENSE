@@ -1,0 +1,175 @@
+# Natively Personal Use Source License v1.0
+
+Copyright (c) 2026 Natively AI Private Limited. All rights reserved.
+
+Effective Date: June 1st 2026 
+
+This license applies only to versions of Natively released by Natively AI Private Limited on or after the Effective Date. Versions released before the Effective Date may remain governed by their previous license terms. This license does not retroactively remove rights that were already granted under a previous license.
+
+Natively is source-available, not open source.
+
+This software and its source code are made available for personal, educational, research, and non-commercial use only.
+
+By accessing, downloading, copying, modifying, forking, running, distributing, installing, or using this software, you agree to the terms of this license.
+
+## 1. Definitions
+
+“Software” means the Natively codebase, including source code, binaries, installers, documentation, assets, build scripts, prompts, configuration files, workflows, and related materials released by Natively AI Private Limited.
+
+“Licensor” means Natively AI Private Limited.
+
+“You” means any individual, company, organization, or legal entity accessing, using, modifying, distributing, or deploying the Software.
+
+“Fork” means any copy, modification, adaptation, rebrand, redistribution, or version of the Software.
+
+“Derivative Work” means any modification, fork, adaptation, translation, rebrand, port, integration, or other work based on, copied from, derived from, or incorporating any copyrightable portion of the Software.
+
+“Public Fork” means any Fork, modified version, Derivative Work, repository, binary, installer, website, app, service, or distribution that is made available to anyone other than the original user.
+
+“Commercial Use” means any use intended for financial gain, business advantage, revenue generation, monetization, paid distribution, paid access, internal business use, SaaS use, consulting, client work, advertising, subscriptions, sponsorships, resale, paid support, enterprise use, startup use, agency use, or any other profit-oriented activity.
+
+## 2. What You Are Allowed To Do
+
+Subject to full compliance with this license, you may:
+
+1. View, study, and learn from the source code.
+2. Fork the Software for personal, educational, research, or non-commercial use.
+3. Modify the Software for your own personal, educational, research, or non-commercial use.
+4. Run the Software locally for personal, educational, research, or non-commercial purposes.
+5. Submit issues, suggestions, pull requests, patches, documentation, designs, prompts, workflows, or other contributions to Natively AI Private Limited.
+6. Share Public Forks only for personal, educational, research, or non-commercial purposes, provided that you comply with this license.
+
+## 3. Same-License Requirement for Public Forks
+
+Any Public Fork, modified version, redistributed copy, or Derivative Work must be released under this same license.
+
+You may not relicense the Software, a Fork, a Public Fork, or a Derivative Work under any other license without prior written permission from Natively AI Private Limited.
+
+You may not add additional terms that remove, weaken, hide, or conflict with this license.
+
+## 4. What You Are Not Allowed To Do
+
+Without prior written permission from Natively AI Private Limited, you may not:
+
+1. Use the Software, a Fork, a Public Fork, or any Derivative Work for Commercial Use.
+2. Sell, rent, license, sublicense, lease, monetize, or commercially distribute the Software or any Derivative Work.
+3. Offer the Software or any Derivative Work as a SaaS product, hosted service, managed service, cloud service, API, desktop app, mobile app, browser extension, paid tool, commercial service, or commercial product.
+4. Use the Software or any Derivative Work in a startup, agency, business, enterprise, marketplace, client project, commercial workflow, or revenue-generating product.
+5. Charge users for access to the Software, a Fork, a Public Fork, a Derivative Work, or substantially similar functionality based on the Software.
+6. Use the Software or any Derivative Work to provide paid support, paid consulting, paid automation, paid interview assistance, paid meeting assistance, transcription services, AI assistance, productivity services, or enterprise services.
+7. Rebrand the Software or any Derivative Work in a way that suggests it is an original independent product.
+8. Misrepresent the origin of the Software or claim that a Fork, Public Fork, or Derivative Work was created independently from Natively.
+9. Remove, hide, obscure, or alter copyright notices, license notices, attribution notices, legal notices, official build identifiers, provenance markers, or references to Natively AI Private Limited.
+10. Use the Software, source code, architecture, prompts, workflows, implementation details, or Derivative Works to build, market, sell, host, or operate a competing commercial product or service.
+11. Use the Software, source code, architecture, prompts, workflows, or implementation details for commercial training, benchmarking, reverse engineering, or development of competing commercial software.
+12. Circumvent, disable, remove, or modify license checks, attribution systems, official build identifiers, provenance markers, copyright notices, license notices, or technical measures used to identify official builds or unauthorized commercial use.
+
+## 5. No Hosted or Managed Service
+
+You may not provide the Software, a Fork, a Public Fork, or any Derivative Work to third parties as a hosted service, managed service, SaaS product, cloud service, API, desktop product, mobile product, browser extension, paid tool, commercial service, or substantially similar offering without prior written permission from Natively AI Private Limited.
+
+## 6. Attribution Requirement
+
+Any Public Fork, modified version, redistributed copy, or Derivative Work must clearly state:
+
+“This project is based on Natively, originally developed by Natively AI Private Limited.”
+
+This notice must be included in:
+
+1. The README or equivalent project documentation.
+2. The license file.
+3. Any public repository description.
+4. Any application “About” screen or equivalent legal notice area, if the Fork includes a user interface.
+5. Any website, landing page, documentation site, or public distribution page for the Fork or Derivative Work.
+
+You may not remove, hide, obscure, or alter this attribution requirement.
+
+## 7. Branding and Trademarks
+
+Natively AI Private Limited retains all rights in the names “Natively”, “Natively AI”, “Natively AI Private Limited”, associated logos, product names, domain names, icons, branding, trade dress, and trademarks.
+
+You may not use names, logos, domains, package names, UI branding, marketing materials, or trade dress that are confusingly similar to Natively or likely to mislead users into believing that a Fork or Derivative Work is official, affiliated, endorsed, sponsored, approved, or independently created.
+
+You may not use the Natively name, logo, brand, or domain in any commercial product or service without prior written permission from Natively AI Private Limited.
+
+## 8. Contributions
+
+Contributions are welcome.
+
+By submitting a contribution, including code, documentation, issues, ideas, pull requests, patches, designs, prompts, workflows, or suggestions, you grant Natively AI Private Limited a perpetual, worldwide, irrevocable, royalty-free, sublicensable, transferable license to use, reproduce, modify, distribute, commercialize, relicense, and incorporate that contribution into Natively or any other Natively AI Private Limited product or service.
+
+You confirm that you have the legal right to submit the contribution.
+
+Natively AI Private Limited is not obligated to accept, merge, credit, publish, maintain, or compensate any contribution.
+
+## 9. Commercial Licensing
+
+Commercial use is not permitted under this license.
+
+If you want to use the Software, a Fork, a Public Fork, a Derivative Work, or any part of the Software for commercial purposes, you must obtain a separate written commercial license from Natively AI Private Limited.
+
+Commercial license requests can be sent to:
+
+Natively AI Private Limited
+Email: [licensing@natively.software](mailto:licensing@natively.software)
+Legal: [legal@natively.software](mailto:legal@natively.software)
+General Contact: [contact@natively.software](mailto:contact@natively.software)
+Website: https://natively.software
+
+Commercial permission is only valid if granted in writing by Natively AI Private Limited.
+
+## 10. Ownership
+
+The Software is licensed, not sold.
+
+Natively AI Private Limited retains all rights, title, and interest in the Software, including copyrights, trademarks, branding, source code, object code, documentation, architecture, prompts, workflows, designs, and related intellectual property.
+
+No rights are granted except those expressly stated in this license.
+
+## 11. Termination
+
+This license terminates automatically and immediately if you violate any term.
+
+Upon termination, you must immediately:
+
+1. Stop using the Software and all Forks, Public Forks, and Derivative Works.
+2. Delete all copies of the Software and Derivative Works in your possession or control.
+3. Stop hosting, selling, distributing, promoting, or monetizing any product or service based on the Software.
+4. Remove any public repositories, binaries, websites, listings, advertisements, or services based on the Software if they violate this license.
+5. Stop using any Natively name, logo, brand, domain, or confusingly similar branding.
+
+Termination does not limit any legal remedies available to Natively AI Private Limited.
+
+## 12. Enforcement
+
+Unauthorized commercial use, SaaS use, resale, rebranding, monetization, removal of attribution, removal of notices, misrepresentation of origin, or confusing branding is not permitted.
+
+Natively AI Private Limited reserves the right to pursue all available legal remedies, including takedown requests, injunctions, damages, recovery of profits, legal costs, and other remedies available under applicable law.
+
+## 13. No Warranty
+
+THE SOFTWARE IS PROVIDED “AS IS” AND “AS AVAILABLE”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, SECURITY, RELIABILITY, OR ACCURACY.
+
+YOU USE THE SOFTWARE AT YOUR OWN RISK.
+
+## 14. Limitation of Liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, NATIVELY AI PRIVATE LIMITED SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF PROFITS, DATA, BUSINESS, GOODWILL, REVENUE, OR USE, ARISING OUT OF OR RELATED TO THE SOFTWARE OR THIS LICENSE.
+
+## 15. Governing Law and Jurisdiction
+
+This license shall be governed by and interpreted in accordance with the laws of India.
+
+Subject to applicable law, the courts located in Kerala, India shall have exclusive jurisdiction over disputes arising out of or related to this license, the Software, or unauthorized use of the Software.
+
+## 16. Severability
+
+If any provision of this license is found to be unenforceable, invalid, or unlawful, the remaining provisions will remain in full force and effect.
+
+## 17. No Waiver
+
+Failure by Natively AI Private Limited to enforce any provision of this license shall not be considered a waiver of its rights.
+
+## 18. Entire Agreement
+
+This license is the entire agreement between you and Natively AI Private Limited regarding use of the Software, unless you have a separate written commercial license agreement signed by Natively AI Private Limited.

@@ -1,0 +1,82 @@
+import React, { useEffect } from 'react';
+import { motion } from 'framer-motion';
+import appIcon from './icon.png';
+
+interface StartupSequenceProps {
+    onComplete: () => void;
+}
+
+const StartupSequence: React.FC<StartupSequenceProps> = ({ onComplete }) => {
+    // Keep the latest onComplete in a ref so the timer effect can depend on []
+    // and arm EXACTLY ONCE for the splash's lifetime. If the effect depended on
+    // `onComplete` directly, an un-memoized caller (a new closure per parent
+    // re-render) would tear down and re-arm both timers on every render — and
+    // the boot path re-renders many times — so the 5s hard-cap safety net could
+    // keep resetting and never fire, trapping the user at the black splash. The
+    // ref makes the safety net immune to prop-identity churn regardless of how
+    // the caller passes onComplete.
+    const onCompleteRef = React.useRef(onComplete);
+    onCompleteRef.current = onComplete;
+
+    useEffect(() => {
+        // Primary dismiss at 2.2s (matches the logo animation length).
+        const timer = setTimeout(() => {
+            onCompleteRef.current();
+        }, 2200);
+        // Hard-cap safety net: no matter what, the splash must never persist past
+        // 5s. If the primary timer's onComplete is ever prevented from advancing
+        // the app (e.g. a throw upstream, a dropped state update), this guarantees
+        // the launcher is revealed rather than leaving the user staring at the
+        // black logo — the "stuck at logo" failure mode. Idempotent: onComplete
+        // just flips showStartup=false, so a double-call is harmless.
+        const hardCap = setTimeout(() => {
+            try { onCompleteRef.current(); } catch { /* never let the splash trap the user */ }
+        }, 5000);
+        return () => {
+            clearTimeout(timer);
+            clearTimeout(hardCap);
+        };
+        // Mount-once: arm the dismissal timers a single time. onComplete is read
+        // through onCompleteRef so it is intentionally NOT a dependency.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return (
+        <div className="fixed inset-0 z-[100] bg-[#000000] flex items-center justify-center overflow-hidden">
+            {/* Volumetric Backlight - Adds depth/atmosphere */}
+            <motion.div
+                className="absolute w-96 h-96 bg-white/10 rounded-full blur-[120px]"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1.2 }}
+                transition={{ duration: 3, ease: "easeOut" }}
+            />
+
+            <motion.img
+                src={appIcon}
+                alt="App Icon"
+                className="w-24 h-24 object-contain relative z-10"
+                initial={{
+                    opacity: 0,
+                    scale: 0.5,
+                    filter: 'grayscale(1) brightness(0.4) drop-shadow(0 0 0px rgba(255,255,255,0))' // Flat Grey
+                }}
+                animate={{
+                    opacity: 1,
+                    scale: 1,
+                    filter: [
+                        'grayscale(1) brightness(0.4) drop-shadow(0 0 0px rgba(255,255,255,0))',   // Start Grey
+                        'grayscale(1) brightness(0.4) drop-shadow(0 0 0px rgba(255,255,255,0))',   // Hold Grey
+                        'grayscale(0) brightness(1) drop-shadow(0 0 20px rgba(255,255,255,0.3))'   // White + Glow/Bloom
+                    ]
+                }}
+                transition={{
+                    opacity: { duration: 0.6, ease: "easeOut" },
+                    scale: { duration: 1.8, ease: [0.16, 1, 0.3, 1] }, // Expo Out - Extremely smooth
+                    filter: { times: [0, 0.25, 1], duration: 1.8, ease: "easeInOut" }
+                }}
+            />
+        </div>
+    );
+};
+
+export default StartupSequence;

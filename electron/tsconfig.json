@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "rootDir": "..",
+    "outDir": "../dist-electron",
+    "moduleResolution": "node",
+    "resolveJsonModule": true
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.js",
+    "../premium/electron/**/*.ts"
+  ],
+  "exclude": [
+    "db/seedDemo.ts",
+    "db/test-db.ts"
+  ]
+}
